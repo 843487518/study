@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+<!--    <parent>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--        <version>2.5.10</version>-->
+<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+<!--    </parent>-->
+
+    <groupId>com.zxk.study</groupId>
+    <artifactId>study</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+    <modules>
+
+        <module>test</module>
+    </modules>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <spring-boot.version>2.6.6</spring-boot.version>
+        <jol.version>0.9</jol.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+<!--            scope-->
+<!--                compile  //默认值，该依赖参与项目的编译、测试和运行，会打包进项目-->
+<!--                runtime  ////该依赖只在运行时使用，一般用于例如JDBC驱动程序，比如编译时只需要JDBC API，而在运行时才需要JDBC驱动实现-->
+<!--                provided  //该依赖参与项目的编译、测试和运行，不会打包进项目，期望运行的环境来提供-->
+<!--                system  //类似provided，区别在于该依赖不从maven仓库中查找，而从项目系统路径中查找，需要显式提供包含依赖的jar-->
+<!--                test  //该依赖只参与项目测试，用于编译和运行测试代码，不会打包进项目-->
+<!--                import  //maven2.0.9版本后出的属性，只能在dependencyManagement的中使用-->
+<!--            optional  //true：该依赖只在本项目中传递，不会传递到子工程-->
+
+<!--            exclusions  //排除子项目传递过来的依赖-->
+
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.49</version>
+<!--                <scope>runtime</scope>-->
+<!--                <scope>为jar包作用范围-->
+<!--                1、test范围指的是测试范围有效，在编译和打包时都不会使用这个依赖-->
+<!--                2、compile范围指的是编译范围有效，在编译和打包时都会将依赖存储进去-->
+<!--                3、provided依赖：在编译和测试的过程有效，最后生成war包时不会加入，诸如：servlet-api，因为servlet-api，tomcat等web服务器已经存在了，如果再打包会冲突-->
+<!--                4、runtime在运行的时候依赖，在编译的时候不依赖                -->
+
+<!--                排除依赖-->
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <groupId>org.springframework</groupId>-->
+<!--                        <artifactId>spring-beans</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.2.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openjdk.jol</groupId>
+                <artifactId>jol-core</artifactId>
+                <version>${jol.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.fusesource</groupId>
+                <artifactId>sigar</artifactId>
+                <version>1.6.4</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.28</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.20</version>
+                <!--                <optional>true</optional>-->
+                <!--                在父工程对jar添加optional且为true，则引用该jar不会传递引入这个依赖 ，即子工程不会继承这个jar               -->
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>3.11.0</version>
+            </dependency>
+<!--            &lt;!&ndash; fastjson &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba</groupId>-->
+<!--                <artifactId>fastjson</artifactId>-->
+<!--                <version>1.2.47</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                <artifactId>jackson-databind</artifactId>-->
+<!--                <version>2.13.2.2</version>-->
+<!--            </dependency>-->
+
+
+<!--            &lt;!&ndash; https://mvnrepository.com/artifact/org.slf4j/slf4j-api &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>org.slf4j</groupId>-->
+<!--                <artifactId>slf4j-api</artifactId>-->
+<!--                <version>1.7.36</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.slf4j</groupId>-->
+<!--                <artifactId>slf4j-log4j12</artifactId>-->
+<!--                <version>1.7.36</version>-->
+<!--&lt;!&ndash;                <type>pom</type>&ndash;&gt;-->
+<!--&lt;!&ndash;                <scope>test</scope>&ndash;&gt;-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>log4j</groupId>-->
+<!--                <artifactId>log4j</artifactId>-->
+<!--                <version>1.2.17</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--&lt;!&ndash;                <version>2.3.1.RELEASE</version>&ndash;&gt;-->
+<!--                <scope>compile</scope>-->
+<!--            </dependency>-->
+
+
+            <dependency>
+                <groupId>javax.websocket</groupId>
+                <artifactId>javax.websocket-api</artifactId>
+                <version>1.1</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
