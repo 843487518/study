@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/5/7  11:25
  */
 @Controller
-@RequestMapping("/v1/redis")
+@RequestMapping("/v1/redis/ops")
 public class RedisController {
     /**
      * 导入Redis操作类StringRedisTemplate

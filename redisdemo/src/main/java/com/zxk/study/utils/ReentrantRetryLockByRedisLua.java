@@ -7,47 +7,48 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Zhouxinkai
- * @Description:
- * @date 2022/5/7  22:44
+ * @Description:可重入和可重试
+ * @date 2022/5/8  9:41
  */
 @Component
-public class ReentrantLockByRedisLua {
-
+public class ReentrantRetryLockByRedisLua {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
     //声明脚本
-    private static final DefaultRedisScript<Long> LRL_SCRIPT;
     private static final DefaultRedisScript<Long> LRUL_SCRIPT;
+    private static final DefaultRedisScript<Long> LRRL_SCRIPT;
+
 
     static {
         //在静态代码块中实例化脚本，等待调用
-        LRL_SCRIPT = new DefaultRedisScript<>();
-        LRL_SCRIPT.setLocation(new ClassPathResource("Reentrantlock.lua"));
-        LRL_SCRIPT.setResultType(Long.class);
         LRUL_SCRIPT = new DefaultRedisScript<>();
         LRUL_SCRIPT.setLocation(new ClassPathResource("ReentrantUnlock.lua"));
         LRUL_SCRIPT.setResultType(Long.class);
+        LRRL_SCRIPT = new DefaultRedisScript<>();
+        LRRL_SCRIPT.setLocation(new ClassPathResource("ReentrantRetrylock.lua"));
+        LRRL_SCRIPT.setResultType(Long.class);
     }
 
     /**
-     * 加锁，可重入
+     *加锁，可重入，可重试
      * @param type,不同的业务使用不用的type来加锁
      * @param outtime,锁的有效时间
+     * @param maxtime,最大尝试次数
      * @return
      */
-    public boolean lock(String type,long outtime) {
+    public boolean retrylock(String type,long outtime,int maxtime) {
         //获取当前线程id
         String id = Utils.ID_PREFIX+Thread.currentThread().getId();
         //尝试加锁
-        Long execute = stringRedisTemplate.execute(LRL_SCRIPT,
+        Long execute = stringRedisTemplate.execute(LRRL_SCRIPT,
                 Collections.singletonList(type),
                 id,
-                outtime);
+                outtime,
+                maxtime);
         assert execute != null;
         return execute.equals(1L);
     }
@@ -67,5 +68,4 @@ public class ReentrantLockByRedisLua {
                 id,
                 outtime);
     }
-
 }
