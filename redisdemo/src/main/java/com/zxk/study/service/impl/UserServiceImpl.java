@@ -43,7 +43,9 @@ public class UserServiceImpl implements UserService {
      */
     @SneakyThrows
     @Override
-    @Transactional(rollbackFor = Exception.class)
+
+    //加锁位置：1.整个方法加锁（本地锁、分布式锁）
+//    @Transactional(rollbackFor = Exception.class)
     public UserDto getUserById(UserDto user) {
         //1.查询缓存
         String s = stringRedisTemplate.opsForValue().get(Utils.USERID_PREFIX + user.getId().toString());
