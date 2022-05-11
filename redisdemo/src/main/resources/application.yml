@@ -20,15 +20,14 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
 
-#logging:
+logging:
 #  config: classpath:logback-spring.xml
-#  level:
-#    root: info
-#    com.example.controller: info
-#    com.example.mapper: debug
-#  pattern:
-#    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"
-#    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"
+  level:
+    root: debug
+    com.zxk.study: trace
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"
 #  file:
 #    name: my.log
 #    path: ./logger

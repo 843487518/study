@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zxk.study.mapper.UserMapper">
-    <!--查询单条用户记录-->
-    <select id="getUser" parameterType="com.example.module.dto.UserDto" resultType="com.example.module.dto.UserDto">
-        select * from sys_user
-        <where>
-            <if test="id != null ">
-                and id=#{id,jdbcType=BIGINT}
-            </if>
-            <if test="userName != null and userName != ''">
-                and user_name = #{userName,jdbcType=VARCHAR}
-            </if>
-        </where>
-    </select>
+<!--    &lt;!&ndash;查询单条用户记录&ndash;&gt;-->
+<!--    <select id="getUser" parameterType="com.example.module.dto.UserDto" resultType="com.example.module.dto.UserDto">-->
+<!--        select * from sys_user-->
+<!--        <where>-->
+<!--            <if test="id != null ">-->
+<!--                and id=#{id,jdbcType=BIGINT}-->
+<!--            </if>-->
+<!--            <if test="userName != null and userName != ''">-->
+<!--                and user_name = #{userName,jdbcType=VARCHAR}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
 
-    <!--插入单条用户记录-->
-    <insert id="insertUser" parameterType="com.example.module.dto.UserDto" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_user(user_name, user_phone, user_email, user_pwd, user_sex)
-        values( #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
-               #{userPwd,jdbcType=VARCHAR}, #{userSex,jdbcType=TINYINT})
-    </insert>
+<!--    &lt;!&ndash;插入单条用户记录&ndash;&gt;-->
+<!--    <insert id="insertUser" parameterType="com.example.module.dto.UserDto" useGeneratedKeys="true" keyProperty="id">-->
+<!--        insert into sys_user(user_name, user_phone, user_email, user_pwd, user_sex)-->
+<!--        values( #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},-->
+<!--               #{userPwd,jdbcType=VARCHAR}, #{userSex,jdbcType=TINYINT})-->
+<!--    </insert>-->
 
-    <select id="selectOne" parameterType="com.example.module.dto.UserDto" resultType="com.example.module.dto.UserDto">
+    <select id="selectOne" parameterType="com.zxk.study.module.dto.UserDto" resultType="com.zxk.study.module.dto.UserDto">
         select
         id AS id,
         user_name AS userName,
@@ -65,70 +65,70 @@
             Limit 1
     </select>
 
-    <select id="selectAll" parameterType="com.example.module.dto.UserDto" resultType="com.example.module.dto.UserDto">
-        select
-        id AS id,
-        user_name AS userName,
-        user_pwd AS userPwd,
-        user_phone AS userPhone,
-        user_email AS userEmail,
-        user_sex AS userSex,
-        create_time AS createTime,
-        update_time AS updateTime,
-        delete_flag AS deleteFlag
-        from sys_user
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="userName != null">
-                and user_name = #{userName}
-            </if>
-            <if test="userPwd != null">
-                and user_pwd = #{userPwd}
-            </if>
-            <if test="userPhone != null">
-                and user_phone = #{userPhone}
-            </if>
-            <if test="userEmail != null">
-                and user_email = #{userEmail}
-            </if>
-            <if test="userSex != null">
-                and user_sex = #{userSex}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
-            <if test="deleteFlag != null">
-                and delete_flag = #{deleteFlag}
-            </if>
-        </where>
-    </select>
+<!--    <select id="selectAll" parameterType="com.zxk.study.module.dto.UserDto" resultType="com.zxk.study.module.dto.UserDto">-->
+<!--        select-->
+<!--        id AS id,-->
+<!--        user_name AS userName,-->
+<!--        user_pwd AS userPwd,-->
+<!--        user_phone AS userPhone,-->
+<!--        user_email AS userEmail,-->
+<!--        user_sex AS userSex,-->
+<!--        create_time AS createTime,-->
+<!--        update_time AS updateTime,-->
+<!--        delete_flag AS deleteFlag-->
+<!--        from sys_user-->
+<!--        <where>-->
+<!--            <if test="id != null">-->
+<!--                and id = #{id}-->
+<!--            </if>-->
+<!--            <if test="userName != null">-->
+<!--                and user_name = #{userName}-->
+<!--            </if>-->
+<!--            <if test="userPwd != null">-->
+<!--                and user_pwd = #{userPwd}-->
+<!--            </if>-->
+<!--            <if test="userPhone != null">-->
+<!--                and user_phone = #{userPhone}-->
+<!--            </if>-->
+<!--            <if test="userEmail != null">-->
+<!--                and user_email = #{userEmail}-->
+<!--            </if>-->
+<!--            <if test="userSex != null">-->
+<!--                and user_sex = #{userSex}-->
+<!--            </if>-->
+<!--            <if test="createTime != null">-->
+<!--                and create_time = #{createTime}-->
+<!--            </if>-->
+<!--            <if test="updateTime != null">-->
+<!--                and update_time = #{updateTime}-->
+<!--            </if>-->
+<!--            <if test="deleteFlag != null">-->
+<!--                and delete_flag = #{deleteFlag}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
 
-    <insert id="insert" parameterType="com.example.module.dto.UserDto"   useGeneratedKeys="true" keyProperty="id" >
-        insert into sys_user (user_name,user_pwd,user_phone,user_email,user_sex,delete_flag)
-        values (#{userName},#{userPwd},#{userPhone},#{userEmail},#{userSex},#{deleteFlag})
-    </insert>
+<!--    <insert id="insert" parameterType="com.example.module.dto.UserDto"   useGeneratedKeys="true" keyProperty="id" >-->
+<!--        insert into sys_user (user_name,user_pwd,user_phone,user_email,user_sex,delete_flag)-->
+<!--        values (#{userName},#{userPwd},#{userPhone},#{userEmail},#{userSex},#{deleteFlag})-->
+<!--    </insert>-->
 
-    <update id="modify" parameterType="com.example.module.dto.UserDto">
-        update sys_user set
-        <if test="userName != null">user_name=#{userName},</if>
-        <if test="userPwd != null">user_pwd=#{userPwd},</if>
-        <if test="userPhone != null">user_phone=#{userPhone},</if>
-        <if test="userEmail != null">user_email=#{userEmail},</if>
-        <if test="userSex != null">user_sex=#{userSex},</if>
-        <if test="deleteFlag != null">delete_flag=#{deleteFlag}</if>
-        <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
-        where id=#{id} and update_time = #{updateTime}
-    </update>
+<!--    <update id="modify" parameterType="com.example.module.dto.UserDto">-->
+<!--        update sys_user set-->
+<!--        <if test="userName != null">user_name=#{userName},</if>-->
+<!--        <if test="userPwd != null">user_pwd=#{userPwd},</if>-->
+<!--        <if test="userPhone != null">user_phone=#{userPhone},</if>-->
+<!--        <if test="userEmail != null">user_email=#{userEmail},</if>-->
+<!--        <if test="userSex != null">user_sex=#{userSex},</if>-->
+<!--        <if test="deleteFlag != null">delete_flag=#{deleteFlag}</if>-->
+<!--        &lt;!&ndash;update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！&ndash;&gt;-->
+<!--        where id=#{id} and update_time = #{updateTime}-->
+<!--    </update>-->
 
-    <update id="delete" parameterType="com.example.module.dto.UserDto">
-        update sys_user set delete_flag=1
-        <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
-        where id=#{id}
-    </update>
+<!--    <update id="delete" parameterType="com.example.module.dto.UserDto">-->
+<!--        update sys_user set delete_flag=1-->
+<!--        &lt;!&ndash;update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！&ndash;&gt;-->
+<!--        where id=#{id}-->
+<!--    </update>-->
 
 </mapper>

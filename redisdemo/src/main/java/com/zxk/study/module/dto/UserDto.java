@@ -8,7 +8,7 @@ import java.util.Date;
  * @date 2022/3/3  13:42
  */
 @Data
-public class UserDto extends BaseDto {
+public class UserDto{
 
     /**
      * 主键ID
@@ -39,4 +39,11 @@ public class UserDto extends BaseDto {
      * 性别
      */
     private Short userSex;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Short deleteFlag;
+
 }

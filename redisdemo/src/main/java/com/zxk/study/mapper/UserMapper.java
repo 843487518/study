@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface UserMapper {
     public UserDto selectOne(UserDto userDto);
-    public List<UserDto > selectAll(UserDto userDto);
-    public int update(UserDto user);
+//    public List<UserDto > selectAll(UserDto userDto);
+//    public int update(UserDto user);
 }

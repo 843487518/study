@@ -18,11 +18,11 @@ public class Utils {
 
     public static final String ID_PREFIX = "ID_PREFIX";
 
-    public static final long LOCK_OUT_TIME = 10L;
+    public static final long LOCK_OUT_TIME = 1000L;
 
-    public static final long CACHE_OUT_TIME = 6000L;
+    public static final long CACHE_OUT_TIME = 600L;
 
-    public static final int RETRYLOCK_MAX = 10;
+    public static final long RETRYLOCK_MAX = 0L;
 
     public static final String USERID_PREFIX ="USERID_PREFIX";
 }

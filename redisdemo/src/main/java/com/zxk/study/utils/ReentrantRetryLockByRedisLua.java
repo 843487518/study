@@ -40,15 +40,17 @@ public class ReentrantRetryLockByRedisLua {
      * @param maxtime,最大尝试次数
      * @return
      */
-    public boolean retrylock(String type,long outtime,int maxtime) {
+    public boolean retrylock(String type,long outtime,long maxtime) {
         //获取当前线程id
         String id = Utils.ID_PREFIX+Thread.currentThread().getId();
         //尝试加锁
         Long execute = stringRedisTemplate.execute(LRRL_SCRIPT,
                 Collections.singletonList(type),
                 id,
-                outtime,
-                maxtime);
+                //outtime,
+                String.valueOf(outtime),
+                //maxtime
+                String.valueOf(maxtime) );
         assert execute != null;
         return execute.equals(1L);
     }

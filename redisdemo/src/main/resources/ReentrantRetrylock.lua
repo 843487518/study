@@ -36,7 +36,7 @@ do
     --执行到这里说明此次加锁失败，当前尝试加锁次数+1
     currentTime = currentTime+1
     --判断是否超过重试次数
-    if (currentTime > maxTime) then
+    if (currentTime > tonumber(maxTime)) then
         --超过规定最大重试次数，就不再重试,跳出循环
         break;
     end
