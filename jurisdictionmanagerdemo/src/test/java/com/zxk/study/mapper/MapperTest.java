@@ -26,8 +26,8 @@ import java.util.List;
 public class MapperTest {
 
 
-    @Autowired
-    private MyBatisPTestMapper myBatisPTestMapper;
+//    @Autowired
+//    private MyBatisPTestMapper myBatisPTestMapper;
     @Autowired
     private SysMenuMapper sysMenuMapper;
     @Autowired
@@ -101,9 +101,9 @@ public class MapperTest {
 
     @Test
     void myBatisPlusTest(){
-        List<TbUser> tbUserS = myBatisPTestMapper.selectList(null);
-        System.out.println(tbUserS.size());
-        tbUserS.forEach(System.out::println);
+//        List<TbUser> tbUserS = myBatisPTestMapper.selectList(null);
+//        System.out.println(tbUserS.size());
+//        tbUserS.forEach(System.out::println);
     }
 
     @Test

@@ -1,9 +1,9 @@
 package com.zxk.study.module.dto;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+//import com.baomidou.mybatisplus.annotation.IdType;
+//import com.baomidou.mybatisplus.annotation.TableField;
+//import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +26,7 @@ public class TbUser implements Serializable {
 
 		 private static final long serialVersionUID = 1L;
 
-		 @TableId(value = "user_id")
+//		 @TableId(value = "user_id")
 		 /**	bigint(20)	PRI*/
 		 private 	Long	user_id;
 		 /**用户名	varchar(50)	UNI*/

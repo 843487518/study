@@ -90,11 +90,13 @@ public class ControllerTest {
     void menuTest(){
         RestTemplate restTemplate=new RestTemplate();
 
+        //BaseResult(code=0, msg=成功!, data={roleid=1, userid=1, listmenu=[{menu_id=1, parentId=0, name=权限管理, url=qwe, icon=null, createUserId=1, createTime=null, updateTime=null, deleteFlag=null}, {menu_id=2, parentId=0, name=菜单管理, url=1111, icon=null, createUserId=1, createTime=null, updateTime=null, deleteFlag=null}, {menu_id=3, parentId=0, name=角色管理, url=2222, icon=null, createUserId=1, createTime=null, updateTime=null, deleteFlag=null}], token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIiwicm9sZUlkIjoiMSIsInNlY3JldFRva2VuIjoidXNlcklkI3VzZXJOYW1lI3JvbGVJZCNleHBpcmVzRGF0ZSNNRDUiLCJyb2xlTmFtZSI6IuS4u-euoSIsImV4cCI6MTY1Mjk2MjQ1MCwidXNlck5hbWUiOiJ6aG91eGsiLCJpYXQiOjE2NTI5NTg4NTAsInVzZXJJZCI6IjEifQ.KhjAfoHh4yOcpfvGaawoi6bxCTUNo7El8lvmRqiZ0CY})
+
 
         // header填充
         LinkedMultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.put("Content-Type", Collections.singletonList("application/json;charset=UTF-8"));
-        headers.put("token", Collections.singletonList(""));
+        headers.put("token", Collections.singletonList("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIiwicm9sZUlkIjoiMSIsInNlY3JldFRva2VuIjoidXNlcklkI3VzZXJOYW1lI3JvbGVJZCNleHBpcmVzRGF0ZSNNRDUiLCJyb2xlTmFtZSI6IuS4u-euoSIsImV4cCI6MTY1Mjk2MjQ1MCwidXNlck5hbWUiOiJ6aG91eGsiLCJpYXQiOjE2NTI5NTg4NTAsInVzZXJJZCI6IjEifQ.KhjAfoHh4yOcpfvGaawoi6bxCTUNo7El8lvmRqiZ0CY"));
 
 
 // body填充
@@ -106,8 +108,11 @@ public class ControllerTest {
 //        RestTemplate restTemplate = HttpInvoker.getRestTemplate();
 // 发送请求
         String menuDetailUrl="http://192.168.1.45:8081/api/v1/menu/detail/1";
-        ResponseEntity<BaseResult> response = restTemplate.postForEntity(menuDetailUrl, request, BaseResult.class);
+//        ResponseEntity<BaseResult> response = restTemplate.getForEntity(menuDetailUrl,BaseResult.class);
 
-        log.info("response={}",response);
+        ResponseEntity<BaseResult> response = restTemplate.exchange(menuDetailUrl, HttpMethod.GET, request, BaseResult.class);
+
+
+        log.info("response={}",response.getBody());
     }
 }
