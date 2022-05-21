@@ -5,7 +5,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -23,10 +22,6 @@ import java.util.Arrays;
 @Slf4j
 public class LogAspect {
 
-    @Pointcut("execution(* com.zxk.study.controller.*.*(..))")
-    public  void controller(){
-
-    }
     /**内部类
      *我们想让日志记录 :
      * url请求
@@ -55,7 +50,7 @@ public class LogAspect {
                     '}';
         }
     }
-    @Before("controller()")
+    @Before("execution(* com.zxk.study.controller.*.*(..))")
     public void before(JoinPoint joinPoint){
         System.out.println("执行了前置方法");
         ServletRequestAttributes attributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -70,7 +65,7 @@ public class LogAspect {
         content content = new content(url,ip,method,args);
         log.info("Request:{}",content);
     }
-    @AfterReturning(value = "controller()",returning = "baseResult")
+    @AfterReturning(value = "execution(* com.zxk.study.controller.*.*(..))",returning = "baseResult")
     public void afterRunning(BaseResult baseResult){
         System.out.println("执行了后置方法");
         log.info(baseResult.toString());

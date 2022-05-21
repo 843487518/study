@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<span th:if="${ session.get('listBaseResult') == null }" >
+<!--<span th:if="${BaseResult == null }" >-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    window.location.href='http://192.168.1.45:8081/api/v1/menu/listmenu';
+    /*]]>*/
+</script>
+</span>
+hello!
+<span th:if="${session.get('listBaseResult') != null }" >
+    <a href = "http://192.168.1.45:8081/addmenu.html">新增</a>
+<table align='center' border='1' cellspacing='0'>
+    <tr>
+        <td>菜单id</td>
+        <td>菜单名</td>
+        <td>URL</td>
+        <td>编辑</td>
+        <td>删除</td>
+    </tr>
+    <tr  th:each="menu:${session.get('listBaseResult').data}">
+        <td th:text="${menu.menuId}"></td>
+        <td th:text="${menu.name}"></td>
+        <td th:text="${menu.url}"></td>
+        <td><a th:href="@{/接口地址(id=${menu.menuId})}">编辑</a></td>
+        <td><a th:href="@{/接口地址(id=${menu.menuId})}">删除</a></td>
+    </tr>
+</table>
+</span>
+</body>
+</html>

@@ -17,7 +17,9 @@
 
 
     <modules>
-<!--        <module>redisdemo</module>-->
+        <module>redisforstreamdemo</module>
+        <module>redisdemo</module>
+        <module>sentineldemo</module>
         <module>test</module>
     </modules>
 

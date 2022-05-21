@@ -27,7 +27,9 @@ import java.util.List;
 
 /**
  * @author Zhouxinkai
- * @Description: sentinel流量控制API
+ * @Description: sentinel流控和熔断
+ * 流控一般设置在服务提供端
+ * 熔断一般设置在服务调用端
  * @date 2022/5/15  11:15
  */
 @RestController

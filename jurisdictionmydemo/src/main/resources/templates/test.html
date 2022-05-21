@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<form id="userInfo" >-->
+<!--  <div class="weui-cell">-->
+<!--    <div class="weui-cell__hd"><label class="weui-label">菜单名称</label></div>-->
+<!--    <div class="weui-cell__bd">-->
+<!--      <input class="weui-input" id="name" name="name" type="text" pattern="[0-9]*" placeholder="请输入菜单名称">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="weui-cell ">-->
+<!--    <div class="weui-cell__hd">-->
+<!--      <label class="weui-label">URL</label>-->
+<!--    </div>-->
+<!--    <div class="weui-cell__bd">-->
+<!--      <input class="weui-input" id="url" name="url" type="text" placeholder="请输入URL">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="weui-cell ">-->
+<!--    <div class="weui-cell__hd">-->
+<!--      <label class="weui-label">父菜单</label>-->
+<!--    </div>-->
+<!--    <div class="weui-cell__bd">-->
+<!--      <input class="weui-input" id="parent_id" name="parent_id" type="text" placeholder="请输入父菜单">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="weui-btn-area">-->
+<!--    <a class="weui-btn weui-btn_primary" href="script:" id="saveUserInfo">确定</a>-->
+<!--  </div>-->
+<!--</form>-->
+<button class="button" id="button" type="button" onclick="fa()" >提交</button>
+<!--<script type="text/javascript">-->
+<!--        function fa(){-->
+<!--            $.post("/api/v1/menu/add",-->
+<!--                {-->
+<!--                    name:"菜鸟教程",-->
+<!--                    url:"http://www.runoob.com",-->
+<!--                    parent_id:1-->
+<!--                },-->
+<!--                function(data,status){-->
+<!--                    alert("数据: \n" + data + "\n状态: " + status);-->
+<!--            });-->
+<!--            alert("点击成功")-->
+<!--        };-->
+<!--</script>-->
+<script type="text/javascript" th:inline="javascript">
+  /*<![CDATA[*/
+    function fa() {
+        const dataTest = {
+            name: "菜鸟教程",
+            icon:"icon",
+            url: "http://www.runoob.com",
+            parentId: 1
+        };
+
+        $.ajax({
+            header:"",
+
+            url:"http://192.168.1.45:8081/api/v1/menu/add",
+            type:"post",
+            async:false,
+            crossDomain : true,
+            contentType:"application/json; charset=utf-8",
+            // data:dataTest,
+            data:JSON.stringify(dataTest),
+            dataType:"json",
+            success:function (data) {
+                alert(data);
+            },
+            error: function (e) {
+                alert("错误！！");
+            }
+        });
+        var msg = "点击成功";
+        alert(msg);
+    }
+  /*]]>*/
+  </script>
+
+<!--<script type="text/javascript" th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+
+<!--    var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];-->
+
+<!--    $(document).ready(function fa() {-->
+<!--        $.ajax({-->
+<!--            type: 'post',-->
+<!--            dataType: 'text',-->
+<!--            url: basePath + '/api/v1/menu/add',-->
+<!--            data: {},-->
+<!--            cache: false,-->
+<!--            async: true,-->
+<!--            success: function (data) {-->
+<!--                var data = eval('(' + data + ')');-->
+<!--                $('#idUser').text(data.name);-->
+<!--                $('#idMsg').text(data.msg);-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+
+<!--    /*]]>*/-->
+<!--</script>-->
+<!--<script th:inline="javascript">-->
+<!--  /*<![CDATA[*/-->
+<!--  /*]]>*/-->
+<!--</script>-->
+
+<!--  <script>-->
+<!--      function goRead( id, cartoonId){-->
+<!--      alert("go-read is click")-->
+<!--      var params = {-->
+<!--      username: $("#name").val(),-->
+<!--      phone: $("#phone").val(),-->
+<!--      password: $("#password").val(),-->
+<!--  }-->
+<!--      $.ajax({-->
+<!--      type: "post",-->
+<!--      url: "@{/doRegister}",-->
+<!--      data: JSON.stringify(params),-->
+<!--      dataType: 'json',-->
+<!--      contentType: 'application/json;charset=UTF-8',-->
+<!--      success: function (r) {-->
+<!--      alert(r)-->
+<!--  }-->
+<!--  })-->
+<!--  }-->
+<!--</script>-->
+
+<!--<script>-->
+<!--  $("#saveUserInfo").click(function() {-->
+<!--    var formObject = {};-->
+<!--    var formArray =$("#userInfo").serializeArray();-->
+<!--    $.each(formArray,function(i,item){-->
+<!--      formObject[item.name] = item.value;-->
+<!--    });-->
+<!--    $.ajax({-->
+<!--      url:"api/v1/menu/add",-->
+<!--      type:"post",-->
+<!--      contentType: "application/json; charset=utf-8",-->
+<!--      data: JSON.stringify(formObject),-->
+<!--      dataType: "json",-->
+<!--      success:function(data){-->
+<!--        alert(data.msg);-->
+<!--      },-->
+<!--      error:function(e){-->
+<!--        alert("错误！！");-->
+<!--      }-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
+
+
+</body>
+</html>

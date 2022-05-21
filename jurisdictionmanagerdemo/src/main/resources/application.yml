@@ -19,6 +19,19 @@ spring:
     username: root
     password: root
 
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  web:
+    resources:
+      static-locations: classpath:/templates/
+
+
 #mybatis:
 #  mapper-locations: classpath:mapper/*Mapper.xml
 mybatis:

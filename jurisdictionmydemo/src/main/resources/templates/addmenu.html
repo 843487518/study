@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="margin:0px auto; width:500px">
+    <form th:action="@{/api/v1/menu/add}" th:object="${MenuInput}" method="post">
+<!--        name: <input name="name" th:value="${menu.name}"/> <br/>-->
+<!--        <input name="id" type="hidden" th:value="${menu.menu_id}"/>-->
+<!--        <button type="submit">提交</button>-->
+        <input type="text" name="name" placeholder="菜单名"><br>
+        <input type="text" name="url" placeholder="URL"><br>
+        <input type="text" name="parent_id" placeholder="父菜单"><br>
+        <button type="submit">提交</button>
+    </form>
+
+
+</div>
+</body>
+</html>

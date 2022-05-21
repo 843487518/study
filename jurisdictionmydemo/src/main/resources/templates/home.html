@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--    欢迎来到首页！！！</br>-->
+<!--    <span th:text="${map.get('userid')}"></span></br>-->
+<!--    <span th:text="${map.get('token')}">token</span></br>-->
+<!--    <span th:text="${map.get('roleid')}">角色ID</span></br>-->
+<!--    <span th:text="${map.get('listmenu')}">菜单列表</span></br>-->
+<!-- <div th:object="${BaseResult}">-->
+<!--     <p>Name: <span th:text="${BaseResult.getCode()}">Sebastian</span>.</p>-->
+<!--     <p>Surname: <span th:text="${BaseResult.getMsg()}">Pepper</span>.</p>-->
+<!--     <p>Nationality: <span th:text="${BaseResult.getData()}">Saturn</span>.</p>-->
+<!-- </div>-->
+
+<span th:if="${ BaseResult.getCode()!=0 }" >
+<script th:inline="javascript">
+/*<![CDATA[*/
+var msg = /*[[${BaseResult.getMsg()}]]*/ 'Sebastian';
+alert(msg);
+window.location.href='http://192.168.1.45:8081/login.html';
+/*]]>*/
+</script>
+</span>
+<div th:if="${ BaseResult.getCode()==0 }" >
+
+<table align='center' border='1' cellspacing='0'>
+    <tr>
+        <td>菜单id</td>
+        <td>菜单名</td>
+        <td>URL</td>
+        <td>跳转</td>
+    </tr>
+<!--    <div th:if="${ BaseResult.getCode()==0 }" >-->
+    <tr  th:each="menu:${BaseResult.getData().get('listmenu')}">
+        <td th:text="${menu.menuId}"></td>
+        <td th:text="${menu.name}"></td>
+        <td th:text="${menu.url}"></td>
+        <td>
+            <a th:href="${menu.url}">跳转</a>
+        </td>
+<!--        <td><a th:href="@{/接口地址(id=${menu.menu_id})}">编辑</a></td>-->
+<!--        <td><a th:href="@{/接口地址(id=${menu.menu_id})}">删除</a></td>-->
+    </tr>
+</table>
+    <a href = "http://192.168.1.45:8081/menu.html">菜单</a>
+    <a th:href = "login.html">登录</a>
+</div>
+</body>
+</html>

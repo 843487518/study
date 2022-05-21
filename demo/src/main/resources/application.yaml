@@ -1,0 +1,23 @@
+server:
+  port: 8082
+  address: 192.168.1.45
+  #默认立即关闭、graceful优雅关闭（待正在执行的用户完成操作后关闭）
+  shutdown: graceful
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 200
+      min-spare: 10
+#  servlet:
+#    context-path:
+spring:
+  application:
+    name: demo
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html

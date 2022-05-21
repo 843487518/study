@@ -6,11 +6,15 @@ import com.zxk.study.service.MenuService;
 import com.zxk.study.utils.BaseResult;
 import com.zxk.study.utils.BaseResultError;
 import java.util.List;
+
+import com.zxk.study.utils.PassToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -39,6 +43,16 @@ public class MenuController {
 		        //TODO 如果有日期类型，记得要转换一下！！！
 		        //sysMenuDTO.setCreateTime(DateUtils.getDateFromFormat(input.getCreateTime()));
 		        return BaseResult.success(menuService.queryList(sysMenuDTO));
+		 }
+		 @PassToken
+		 @PostMapping("/listThymeleaf")
+		 public ModelAndView getListThymeleaf(@RequestBody MenuInput menuInput){
+			 SysMenuDTO sysMenuDTO=new SysMenuDTO();
+			 BeanUtils.copyProperties(menuInput, sysMenuDTO);
+			 List<SysMenuDTO> sysMenuDTOS = menuService.queryList(sysMenuDTO);
+			 ModelAndView modelAndView = new ModelAndView("/thymeleaf/menu");
+			 modelAndView.getModel().put("menuList",sysMenuDTOS);
+			 return modelAndView;
 		 }
 		 @PostMapping("/add")
 		 public BaseResult add(@RequestBody MenuInput menuInput){
