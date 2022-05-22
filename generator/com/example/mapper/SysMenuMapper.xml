@@ -2,26 +2,9 @@
 <!DOCTYPE mapper 
        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zxk.study.mapper.SysMenuMapper">
-<!--    <resultMap id="SysMenuDTOMap" type="com.zxk.study.module.dto.SysMenuDTO">-->
-<!--        <id column="menu_id" property="menu_id"></id>-->
-<!--    </resultMap>-->
-<select id="selectAllAll" resultType="com.zxk.study.module.dto.SysMenuDTO">
-            select
-                menu_id AS menuId,
-                parent_id AS parentId,
-                name AS name,
-                url AS url,
-                icon AS icon,
-                create_user_id AS createUserId,
-                create_time AS createTime,
-                update_time AS updateTime,
-                delete_flag AS deleteFlag
-            from sys_menu
-            where
-                delete_flag != 1
-</select>
- <select id="selectOne" parameterType="com.zxk.study.module.dto.SysMenuDTO" resultType="com.zxk.study.module.dto.SysMenuDTO">
+<mapper namespace="com.example.mapper.SysMenuMapper">
+
+ <select id="selectOne" parameterType="com.example.module.dto.SysMenuDTO" resultType="com.example.module.dto.SysMenuDTO">
             select 
                           menu_id AS menuId,
                           parent_id AS parentId,
@@ -64,9 +47,9 @@
                         </where>
                         Limit 1
  </select>
-<!--    <select id="selectAll" parameterType="com.zxk.study.module.dto.SysMenuDTO" resultType="com.zxk.study.module.dto.SysMenuDTO">-->
- <select id="selectAll" parameterType="com.zxk.study.module.dto.SysMenuDTO" resultType="com.zxk.study.module.dto.SysMenuDTO">
-            select
+
+ <select id="selectAll" parameterType="com.example.module.dto.SysMenuDTO" resultType="com.example.module.dto.SysMenuDTO">
+            select 
                           menu_id AS menuId,
                           parent_id AS parentId,
                           name AS name,
@@ -78,7 +61,7 @@
                           delete_flag AS deleteFlag
               from sys_menu
                         <where>
-                          <if test="menuId!= null">
+                          <if test="menuId != null">
                               and menu_id = #{menuId}
                           </if>
                           <if test="parentId != null">
@@ -108,25 +91,27 @@
                         </where>
  </select>
 
- <insert id="insert" parameterType="com.zxk.study.module.dto.SysMenuDTO"   useGeneratedKeys="true" keyProperty="menuId" >
+ <insert id="insert" parameterType="com.example.module.dto.SysMenuDTO"   useGeneratedKeys="true" keyProperty="id" >
        insert into sys_menu (parent_id,name,url,icon,create_user_id,delete_flag)
-       values (#{parentId},#{name},#{url},#{icon},#{createUserId},0)
+       values (#{parentId},#{name},#{url},#{icon},#{createUserId},#{deleteFlag})
  </insert>
 
- <update id="update" parameterType="com.zxk.study.module.dto.SysMenuDTO">
+ <update id="update" parameterType="com.example.module.dto.SysMenuDTO">
        update sys_menu set 
               <if test="parentId != null">parent_id=#{parentId},</if>
               <if test="name != null">name=#{name},</if>
               <if test="url != null">url=#{url},</if>
               <if test="icon != null">icon=#{icon},</if>
-              <if test="1==1">update_time=now()</if>
-                  where menu_id=#{menuId}
+              <if test="createUserId != null">create_user_id=#{createUserId},</if>
+              <if test="deleteFlag != null">delete_flag=#{deleteFlag}</if>
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} and update_time = #{updateTime}
  </update>
 
- <update id="delete" parameterType="com.zxk.study.module.dto.SysMenuDTO">
+ <update id="delete" parameterType="com.example.module.dto.SysMenuDTO">
        update sys_menu set delete_flag=1 
-
-                  where menu_id=#{menuId}
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} 
  </update>
 
 

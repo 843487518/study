@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 <span th:if="${ session.get('listBaseResult') == null }" >
@@ -13,6 +15,7 @@
     /*]]>*/
 </script>
 </span>
+
 hello!
 <span th:if="${session.get('listBaseResult') != null }" >
     <a href = "http://192.168.1.45:8081/addmenu.html">新增</a>
@@ -25,13 +28,53 @@ hello!
         <td>删除</td>
     </tr>
     <tr  th:each="menu:${session.get('listBaseResult').data}">
-        <td th:text="${menu.menuId}"></td>
+        <td th:text="${menu.menuId}" th:id="${menu.menuId}"></td>
         <td th:text="${menu.name}"></td>
         <td th:text="${menu.url}"></td>
-        <td><a th:href="@{/接口地址(id=${menu.menuId})}">编辑</a></td>
-        <td><a th:href="@{/接口地址(id=${menu.menuId})}">删除</a></td>
+<!--        <td><a href = "http://192.168.1.45:8081/modifyMenu.html?1">编辑</a></td>-->
+        <td><a th:href="@{/modifyMenu.html?(id=${menu.menuId})}">编辑</a></td>
+<!--        <td><a th:href="@{/api/v1/menu/delete/(id=${menu.menuId})}" th:onclick="deleteFunction(${menu.menuId})">删除</a></td>-->
+        <td>
+            <a href="#" onclick="deleteFunction(this)" th:id="${menu.menuId}">删除</a>
+        </td>
     </tr>
 </table>
+    <script language="JavaScript">
+        function deleteFunction(en){
+            var menuId=en.id;
+            alert(en.id);
+            alert(menuId);
+
+            var url="http://192.168.1.45:8081/api/v1/menu/delete/"+menuId;
+
+
+            $.ajax({
+                url: url,
+                type: "get",
+                async: false,
+                crossDomain: true,
+                contentType: "application/json; charset=utf-8",
+                // data:JSON.stringify(dataTest),
+                // data: {
+                //     id:parseInt(menuId)
+                // },
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 0){
+                        window.location.href='http://192.168.1.45:8081/api/v1/menu/listmenu';
+                    }else
+                    {
+                        alert(data.msg);
+                    }
+                },
+                error: function (e) {
+                    alert("错误！！");
+                }
+            });
+            //window.location.href='http://192.168.1.45:8081/menu.html';
+
+        }
+</script>
 </span>
 </body>
 </html>

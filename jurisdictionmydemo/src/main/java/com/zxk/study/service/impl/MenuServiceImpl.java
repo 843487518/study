@@ -38,8 +38,12 @@ public class MenuServiceImpl implements MenuService {
 		 return BaseResult.fail(BaseResultError.API_DO_FAIL);
 	 }
 	 @Override
-	 public int modify(SysMenuDTO sysMenuDTO){
-	        return sysMenuMapper.update(sysMenuDTO);
+	 public BaseResult modify(SysMenuDTO sysMenuDTO){
+		 int update = sysMenuMapper.update(sysMenuDTO);
+		 if (update == 0){
+		 	return BaseResult.fail(BaseResultError.API_DO_FAIL);
+		 }
+		 return BaseResult.success("");
 	 }
 	 @Override
 	 public int delete(SysMenuDTO sysMenuDTO){

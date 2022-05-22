@@ -32,8 +32,10 @@ public class MenuController {
 
 		 @Autowired
 		 MenuService menuService;
-		 @GetMapping("/detail/{id}")
-		 public BaseResult getDetail(@PathVariable("id") long id){
+		 @PassToken
+		 @GetMapping("/detail")
+		 @ResponseBody
+		 public BaseResult getDetail(@RequestParam long id){
 		        SysMenuDTO sysMenuDTO=new SysMenuDTO();
 		        sysMenuDTO.setMenuId(id);
 		        return BaseResult.success(menuService.query(sysMenuDTO));
@@ -66,27 +68,30 @@ public class MenuController {
 			 return modelAndView;
 		 }
 		 @PassToken
+		 @ResponseBody
 		 @PostMapping("/add")
-		 public String add(@RequestBody MenuInput menuInput,HttpServletRequest request){
+		 public BaseResult add(@RequestBody MenuInput menuInput,HttpServletRequest request){
 		        SysMenuDTO sysMenuDTO=new SysMenuDTO();
 		        BeanUtils.copyProperties(menuInput, sysMenuDTO);
 			 	BaseResult add = menuService.add(sysMenuDTO);
-			 	request.getSession().setAttribute("addBaseResult",add);
-			 	return "home";
+//			 	request.getSession().setAttribute("addBaseResult",add);
+			 	return add;
 
 
 		 }
+		 @PassToken
+		 @ResponseBody
 		 @PostMapping("/modify")
 		 public BaseResult modify(@RequestBody MenuInput menuInput){
 		        SysMenuDTO sysMenuDTO=new SysMenuDTO();
 		        BeanUtils.copyProperties(menuInput, sysMenuDTO);
-		        int cnt= menuService.modify(sysMenuDTO);
-		        if(cnt==1){
-		            return BaseResult.success(cnt);
-		        }
-		        return BaseResult.fail(BaseResultError.API_DO_FAIL);
+		        BaseResult modify = menuService.modify(sysMenuDTO);
+			 	return modify;
+
 		 }
+		 @PassToken
 		 @GetMapping("/delete/{id}")
+		 @ResponseBody
 		 public BaseResult delete(@PathVariable("id") long id){
 		        SysMenuDTO sysMenuDTO=new SysMenuDTO();
 		        sysMenuDTO.setMenuId(id);

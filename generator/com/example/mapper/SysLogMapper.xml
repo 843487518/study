@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.SysLogMapper">
+
+ <select id="selectOne" parameterType="com.example.module.dto.SysLogDTO" resultType="com.example.module.dto.SysLogDTO">
+            select 
+                          id AS id,
+                          username AS username,
+                          operation AS operation,
+                          method AS method,
+                          params AS params,
+                          time AS time,
+                          ip AS ip,
+                          create_date AS createDate
+              from sys_log
+                        <where>
+                          <if test="id != null">
+                              and id = #{id}
+                          </if>
+                          <if test="username != null">
+                              and username = #{username}
+                          </if>
+                          <if test="operation != null">
+                              and operation = #{operation}
+                          </if>
+                          <if test="method != null">
+                              and method = #{method}
+                          </if>
+                          <if test="params != null">
+                              and params = #{params}
+                          </if>
+                          <if test="time != null">
+                              and time = #{time}
+                          </if>
+                          <if test="ip != null">
+                              and ip = #{ip}
+                          </if>
+                          <if test="createDate != null">
+                              and create_date = #{createDate}
+                          </if>
+                        </where>
+                        Limit 1
+ </select>
+
+ <select id="selectAll" parameterType="com.example.module.dto.SysLogDTO" resultType="com.example.module.dto.SysLogDTO">
+            select 
+                          id AS id,
+                          username AS username,
+                          operation AS operation,
+                          method AS method,
+                          params AS params,
+                          time AS time,
+                          ip AS ip,
+                          create_date AS createDate
+              from sys_log
+                        <where>
+                          <if test="id != null">
+                              and id = #{id}
+                          </if>
+                          <if test="username != null">
+                              and username = #{username}
+                          </if>
+                          <if test="operation != null">
+                              and operation = #{operation}
+                          </if>
+                          <if test="method != null">
+                              and method = #{method}
+                          </if>
+                          <if test="params != null">
+                              and params = #{params}
+                          </if>
+                          <if test="time != null">
+                              and time = #{time}
+                          </if>
+                          <if test="ip != null">
+                              and ip = #{ip}
+                          </if>
+                          <if test="createDate != null">
+                              and create_date = #{createDate}
+                          </if>
+                        </where>
+ </select>
+
+ <insert id="insert" parameterType="com.example.module.dto.SysLogDTO"   useGeneratedKeys="true" keyProperty="id" >
+       insert into sys_log (username,operation,method,params,time,ip,create_date)
+       values (#{username},#{operation},#{method},#{params},#{time},#{ip},#{createDate})
+ </insert>
+
+ <update id="update" parameterType="com.example.module.dto.SysLogDTO">
+       update sys_log set 
+              <if test="username != null">username=#{username},</if>
+              <if test="operation != null">operation=#{operation},</if>
+              <if test="method != null">method=#{method},</if>
+              <if test="params != null">params=#{params},</if>
+              <if test="time != null">time=#{time},</if>
+              <if test="ip != null">ip=#{ip},</if>
+              <if test="createDate != null">create_date=#{createDate}</if>
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} and update_time = #{updateTime}
+ </update>
+
+ <update id="delete" parameterType="com.example.module.dto.SysLogDTO">
+       update sys_log set delete_flag=1 
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} 
+ </update>
+
+
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.TbUserMapper">
+
+ <select id="selectOne" parameterType="com.example.module.dto.TbUserDTO" resultType="com.example.module.dto.TbUserDTO">
+            select 
+                          user_id AS userId,
+                          username AS username,
+                          mobile AS mobile,
+                          password AS password,
+                          create_time AS createTime,
+                          update_time AS updateTime,
+                          delete_flag AS deleteFlag
+              from tb_user
+                        <where>
+                          <if test="userId != null">
+                              and user_id = #{userId}
+                          </if>
+                          <if test="username != null">
+                              and username = #{username}
+                          </if>
+                          <if test="mobile != null">
+                              and mobile = #{mobile}
+                          </if>
+                          <if test="password != null">
+                              and password = #{password}
+                          </if>
+                          <if test="createTime != null">
+                              and create_time = #{createTime}
+                          </if>
+                          <if test="updateTime != null">
+                              and update_time = #{updateTime}
+                          </if>
+                          <if test="deleteFlag != null">
+                              and delete_flag = #{deleteFlag}
+                          </if>
+                        </where>
+                        Limit 1
+ </select>
+
+ <select id="selectAll" parameterType="com.example.module.dto.TbUserDTO" resultType="com.example.module.dto.TbUserDTO">
+            select 
+                          user_id AS userId,
+                          username AS username,
+                          mobile AS mobile,
+                          password AS password,
+                          create_time AS createTime,
+                          update_time AS updateTime,
+                          delete_flag AS deleteFlag
+              from tb_user
+                        <where>
+                          <if test="userId != null">
+                              and user_id = #{userId}
+                          </if>
+                          <if test="username != null">
+                              and username = #{username}
+                          </if>
+                          <if test="mobile != null">
+                              and mobile = #{mobile}
+                          </if>
+                          <if test="password != null">
+                              and password = #{password}
+                          </if>
+                          <if test="createTime != null">
+                              and create_time = #{createTime}
+                          </if>
+                          <if test="updateTime != null">
+                              and update_time = #{updateTime}
+                          </if>
+                          <if test="deleteFlag != null">
+                              and delete_flag = #{deleteFlag}
+                          </if>
+                        </where>
+ </select>
+
+ <insert id="insert" parameterType="com.example.module.dto.TbUserDTO"   useGeneratedKeys="true" keyProperty="id" >
+       insert into tb_user (username,mobile,password,delete_flag)
+       values (#{username},#{mobile},#{password},#{deleteFlag})
+ </insert>
+
+ <update id="update" parameterType="com.example.module.dto.TbUserDTO">
+       update tb_user set 
+              <if test="username != null">username=#{username},</if>
+              <if test="mobile != null">mobile=#{mobile},</if>
+              <if test="password != null">password=#{password},</if>
+              <if test="deleteFlag != null">delete_flag=#{deleteFlag}</if>
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} and update_time = #{updateTime}
+ </update>
+
+ <update id="delete" parameterType="com.example.module.dto.TbUserDTO">
+       update tb_user set delete_flag=1 
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} 
+ </update>
+
+
+</mapper>

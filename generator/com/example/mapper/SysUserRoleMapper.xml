@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.SysUserRoleMapper">
+
+ <select id="selectOne" parameterType="com.example.module.dto.SysUserRoleDTO" resultType="com.example.module.dto.SysUserRoleDTO">
+            select 
+                          id AS id,
+                          user_id AS userId,
+                          role_id AS roleId,
+                          create_user_id AS createUserId,
+                          create_time AS createTime,
+                          update_time AS updateTime,
+                          delete_flag AS deleteFlag
+              from sys_user_role
+                        <where>
+                          <if test="id != null">
+                              and id = #{id}
+                          </if>
+                          <if test="userId != null">
+                              and user_id = #{userId}
+                          </if>
+                          <if test="roleId != null">
+                              and role_id = #{roleId}
+                          </if>
+                          <if test="createUserId != null">
+                              and create_user_id = #{createUserId}
+                          </if>
+                          <if test="createTime != null">
+                              and create_time = #{createTime}
+                          </if>
+                          <if test="updateTime != null">
+                              and update_time = #{updateTime}
+                          </if>
+                          <if test="deleteFlag != null">
+                              and delete_flag = #{deleteFlag}
+                          </if>
+                        </where>
+                        Limit 1
+ </select>
+
+ <select id="selectAll" parameterType="com.example.module.dto.SysUserRoleDTO" resultType="com.example.module.dto.SysUserRoleDTO">
+            select 
+                          id AS id,
+                          user_id AS userId,
+                          role_id AS roleId,
+                          create_user_id AS createUserId,
+                          create_time AS createTime,
+                          update_time AS updateTime,
+                          delete_flag AS deleteFlag
+              from sys_user_role
+                        <where>
+                          <if test="id != null">
+                              and id = #{id}
+                          </if>
+                          <if test="userId != null">
+                              and user_id = #{userId}
+                          </if>
+                          <if test="roleId != null">
+                              and role_id = #{roleId}
+                          </if>
+                          <if test="createUserId != null">
+                              and create_user_id = #{createUserId}
+                          </if>
+                          <if test="createTime != null">
+                              and create_time = #{createTime}
+                          </if>
+                          <if test="updateTime != null">
+                              and update_time = #{updateTime}
+                          </if>
+                          <if test="deleteFlag != null">
+                              and delete_flag = #{deleteFlag}
+                          </if>
+                        </where>
+ </select>
+
+ <insert id="insert" parameterType="com.example.module.dto.SysUserRoleDTO"   useGeneratedKeys="true" keyProperty="id" >
+       insert into sys_user_role (user_id,role_id,create_user_id,delete_flag)
+       values (#{userId},#{roleId},#{createUserId},#{deleteFlag})
+ </insert>
+
+ <update id="update" parameterType="com.example.module.dto.SysUserRoleDTO">
+       update sys_user_role set 
+              <if test="userId != null">user_id=#{userId},</if>
+              <if test="roleId != null">role_id=#{roleId},</if>
+              <if test="createUserId != null">create_user_id=#{createUserId},</if>
+              <if test="deleteFlag != null">delete_flag=#{deleteFlag}</if>
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} and update_time = #{updateTime}
+ </update>
+
+ <update id="delete" parameterType="com.example.module.dto.SysUserRoleDTO">
+       update sys_user_role set delete_flag=1 
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} 
+ </update>
+
+
+</mapper>

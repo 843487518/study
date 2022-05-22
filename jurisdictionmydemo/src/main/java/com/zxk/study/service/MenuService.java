@@ -15,7 +15,7 @@ public interface MenuService {
 		 public SysMenuDTO query(SysMenuDTO sysMenuDTO);
 		 public List<SysMenuDTO > queryList(SysMenuDTO sysMenuDTO);
 		 public BaseResult add(SysMenuDTO sysMenuDTO);
-		 public int modify(SysMenuDTO sysMenuDTO);
+		 public BaseResult modify(SysMenuDTO sysMenuDTO);
 		 public int delete(SysMenuDTO sysMenuDTO);
 		 public List<SysMenuDTO > queryListAll();
 
