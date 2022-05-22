@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 			//1.判断数据库中是否存在当前用户
 			TbUserDTO tbUser = tbUserMapper.selectOne(tbUserDTO);
 			if (tbUser == null){
-				return BaseResult.fail(BaseResultError.API_LOGIN_Fail);
+				return BaseResult.fail(BaseResultError.API_LOGIN_Fail_USER_NOT_EXISTED);
 			}
 			//2.判断密码是否匹配
 			if (!(tbUserDTO.getPassword().equals(tbUser.getPassword()))){

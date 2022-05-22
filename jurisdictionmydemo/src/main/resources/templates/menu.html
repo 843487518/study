@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/static.menu/js/js/js1"></script>
 
 </head>
 <body>
@@ -32,7 +32,7 @@ hello!
         <td th:text="${menu.name}"></td>
         <td th:text="${menu.url}"></td>
 <!--        <td><a href = "http://192.168.1.45:8081/modifyMenu.html?1">编辑</a></td>-->
-        <td><a th:href="@{/modifyMenu.html?(id=${menu.menuId})}">编辑</a></td>
+        <td><a th:href="@{/templates/modifyMenu.html?(id=${menu.menuId})}">编辑</a></td>
 <!--        <td><a th:href="@{/api/v1/menu/delete/(id=${menu.menuId})}" th:onclick="deleteFunction(${menu.menuId})">删除</a></td>-->
         <td>
             <a href="#" onclick="deleteFunction(this)" th:id="${menu.menuId}">删除</a>

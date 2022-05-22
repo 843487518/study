@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+    <script type="text/javascript" src="//static/js/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+
+    window.onload = function () {
+        var id=getQueryVariable("id");
+        alert(id)
+        $.ajax({
+            url: "http://192.168.1.45:8081/api/v1/menu/detail",
+            type: "get",
+            async: false,
+            crossDomain: true,
+            contentType: "application/json; charset=utf-8",
+            // data:JSON.stringify(dataTest),
+            data: {
+                id:parseInt(id)
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0){
+                    alert(data.data.name)
+                    document.getElementById("name").value = data.data.name;
+                    document.getElementById("url").value = data.data.url;
+                    document.getElementById("parentId").value = data.data.parentId;
+                    document.getElementById("menuId").value = data.data.menuId;
+                }
+            },
+            error: function (e) {
+                alert("错误！！");
+            }
+        });
+    }
+    /*]]>*/
+</script>
+<div style="margin:0px auto; width:500px">
+        <input id="menuId" type="text" name="menuId" placeholder="菜单ID"><br>
+        <input id="name" type="text" name="name" placeholder="菜单名"><br>
+        <input id="url" type="text" name="url" placeholder="URL"><br>
+        <input id="parentId" type="number" name="parentId" placeholder="父菜单"><br>
+        <button type="submit" onclick="modify()">提交</button>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    function modify() {
+        var menuId = document.getElementById("menuId").value;
+        var name =document.getElementById("name").value;
+        var url = document.getElementById("url").value;
+        var parentId = document.getElementById("parentId").value;
+        const dataModify = {
+            menuId:menuId,
+            name: name,
+            icon:"icon",
+            url: url,
+            parentId:parseInt(parentId)
+        };
+
+        $.ajax({
+            url:"http://192.168.1.45:8081/api/v1/menu/modify",
+            type:"post",
+            async:false,
+            crossDomain : true,
+            contentType:"application/json; charset=utf-8",
+            // data:dataTest,
+            data:JSON.stringify(dataModify),
+            dataType:"json",
+            success:function (data) {
+                alert(data);
+                if(data.code==0){
+                    window.location.href='http://192.168.1.45:8081/menu.html';
+                }else {
+                    alert(data.msg);
+                }
+            },
+            error: function (e) {
+                alert("错误！！");
+            }
+        });
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>

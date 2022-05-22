@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+
+</head>
+<div>
+    <textarea>hello</textarea>
+    <table border="1px" id="menu_table">
+
+    </table>
+</div>
+<body>
+
+<script language="JavaScript">
+<!--页面加载的时候就去请求-->
+    window.onload = function () {
+        $.ajax({
+            url: "http://192.168.1.45:8081/api/v1/menu/listmenu",
+            type: "get",
+            async: false,
+            crossDomain: true,
+            contentType: "application/json; charset=utf-8",
+            // data:JSON.stringify(dataTest),
+            dataType: "json",
+            success: function (data) {
+                alert(data);
+                if (data.code == 0) {
+                    showData(data.data);
+                }
+            },
+            error: function (e) {
+                alert("错误！！");
+            }
+        });
+        function showData(data) {
+            var table = $("#menu_table");
+            alert(table.id);
+
+            table.empty();
+            //拼接表头
+            table.append("<tr></tr><td>id</td><td>名称</td><td>url</td></tr>");
+            for (var i = 0; i < data.length; i++) {
+                //拼接表格的行和列
+                var str = "<tr><td>" + data[i].menuId + "</td><td>" + data[i].name + "</td><td>" + data[i].url + "</td></tr>";
+                table.append(str);
+            }
+        }
+    }
+
+
+</script>
+
+<!--<span th:if="${ session.get('listBaseResult') == null }" >-->
+<!--&lt;!&ndash;<span th:if="${BaseResult == null }" >&ndash;&gt;-->
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+<!--    window.location.href='http://192.168.1.45:8081/api/v1/menu/listmenu';-->
+<!--    /*]]>*/-->
+<!--</script>-->
+<!--</span>-->
+<!--<span th:if="${session.get('listBaseResult') != null }" >-->
+<!--    <a href = "http://192.168.1.45:8081/addmenu.html">新增</a>-->
+<!--<table align='center' border='1' cellspacing='0'>-->
+<!--    <tr>-->
+<!--        <td>菜单id</td>-->
+<!--        <td>菜单名</td>-->
+<!--        <td>URL</td>-->
+<!--        <td>编辑</td>-->
+<!--        <td>删除</td>-->
+<!--    </tr>-->
+<!--    <tr  th:each="menu:${session.get('listBaseResult').data}">-->
+<!--        <td th:text="${menu.menuId}" th:id="${menu.menuId}"></td>-->
+<!--        <td th:text="${menu.name}"></td>-->
+<!--        <td th:text="${menu.url}"></td>-->
+<!--&lt;!&ndash;        <td><a href = "http://192.168.1.45:8081/modifyMenu.html?1">编辑</a></td>&ndash;&gt;-->
+<!--        <td><a th:href="@{/templates/menu/modifyMenu.html?(id=${menu.menuId})}">编辑</a></td>-->
+<!--&lt;!&ndash;        <td><a th:href="@{/api/v1/menu/delete/(id=${menu.menuId})}" th:onclick="deleteFunction(${menu.menuId})">删除</a></td>&ndash;&gt;-->
+<!--        <td>-->
+<!--            <a href="#" onclick="deleteFunction(this)" th:id="${menu.menuId}">删除</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+<!--    <script language="JavaScript">-->
+<!--        function deleteFunction(en){-->
+<!--            var menuId=en.id;-->
+<!--            alert(en.id);-->
+<!--            alert(menuId);-->
+
+<!--            var url="http://192.168.1.45:8081/api/v1/menu/delete/"+menuId;-->
+
+
+<!--            $.ajax({-->
+<!--                url: url,-->
+<!--                type: "get",-->
+<!--                async: false,-->
+<!--                crossDomain: true,-->
+<!--                contentType: "application/json; charset=utf-8",-->
+<!--                // data:JSON.stringify(dataTest),-->
+<!--                // data: {-->
+<!--                //     id:parseInt(menuId)-->
+<!--                // },-->
+<!--                dataType: "json",-->
+<!--                success: function (data) {-->
+<!--                    if (data.code == 0){-->
+<!--                        window.location.href='http://192.168.1.45:8081/api/v1/menu/listmenu';-->
+<!--                    }else-->
+<!--                    {-->
+<!--                        alert(data.msg);-->
+<!--                    }-->
+<!--                },-->
+<!--                error: function (e) {-->
+<!--                    alert("错误！！");-->
+<!--                }-->
+<!--            });-->
+<!--            //window.location.href='http://192.168.1.45:8081/menu.html';-->
+
+<!--        }-->
+<!--</script>-->
+<!--</span>-->
+</body>
+</html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxk.study.mapper.JmMenuMapper">
+
+ <select id="selectOne" parameterType="com.zxk.study.module.dto.JmMenuDTO" resultType="com.zxk.study.module.dto.JmMenuDTO">
+            select 
+                          id AS id,
+                          parent_id AS parentId,
+                          menu_name AS menuName,
+                          url AS url,
+                          icon AS icon,
+                          create_user_id AS createUserId,
+                          create_time AS createTime,
+                          update_time AS updateTime,
+                          delete_flag AS deleteFlag
+              from jm_menu
+                        <where>
+                          <if test="id != null">
+                              and id = #{id}
+                          </if>
+                          <if test="parentId != null">
+                              and parent_id = #{parentId}
+                          </if>
+                          <if test="menuName != null">
+                              and menu_name = #{menuName}
+                          </if>
+                          <if test="url != null">
+                              and url = #{url}
+                          </if>
+                          <if test="icon != null">
+                              and icon = #{icon}
+                          </if>
+                          <if test="createUserId != null">
+                              and create_user_id = #{createUserId}
+                          </if>
+                          <if test="createTime != null">
+                              and create_time = #{createTime}
+                          </if>
+                          <if test="updateTime != null">
+                              and update_time = #{updateTime}
+                          </if>
+                          <if test="deleteFlag != null">
+                              and delete_flag = #{deleteFlag}
+                          </if>
+                        </where>
+                        Limit 1
+ </select>
+
+ <select id="selectAll" parameterType="com.zxk.study.module.dto.JmMenuDTO" resultType="com.zxk.study.module.dto.JmMenuDTO">
+            select 
+                          id AS id,
+                          parent_id AS parentId,
+                          menu_name AS menuName,
+                          url AS url,
+                          icon AS icon,
+                          create_user_id AS createUserId,
+                          create_time AS createTime,
+                          update_time AS updateTime,
+                          delete_flag AS deleteFlag
+              from jm_menu
+                        <where>
+                          <if test="id != null">
+                              and id = #{id}
+                          </if>
+                          <if test="parentId != null">
+                              and parent_id = #{parentId}
+                          </if>
+                          <if test="menuName != null">
+                              and menu_name = #{menuName}
+                          </if>
+                          <if test="url != null">
+                              and url = #{url}
+                          </if>
+                          <if test="icon != null">
+                              and icon = #{icon}
+                          </if>
+                          <if test="createUserId != null">
+                              and create_user_id = #{createUserId}
+                          </if>
+                          <if test="createTime != null">
+                              and create_time = #{createTime}
+                          </if>
+                          <if test="updateTime != null">
+                              and update_time = #{updateTime}
+                          </if>
+                          <if test="deleteFlag != null">
+                              and delete_flag = #{deleteFlag}
+                          </if>
+                        </where>
+ </select>
+
+ <insert id="insert" parameterType="com.zxk.study.module.dto.JmMenuDTO"   useGeneratedKeys="true" keyProperty="id" >
+       insert into jm_menu (parent_id,menu_name,url,icon,create_user_id,delete_flag)
+       values (#{parentId},#{menuName},#{url},#{icon},#{createUserId},#{deleteFlag})
+ </insert>
+
+ <update id="update" parameterType="com.zxk.study.module.dto.JmMenuDTO">
+       update jm_menu set 
+              <if test="parentId != null">parent_id=#{parentId},</if>
+              <if test="menuName != null">menu_name=#{menuName},</if>
+              <if test="url != null">url=#{url},</if>
+              <if test="icon != null">icon=#{icon},</if>
+              <if test="createUserId != null">create_user_id=#{createUserId},</if>
+              <if test="deleteFlag != null">delete_flag=#{deleteFlag}</if>
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} and update_time = #{updateTime}
+ </update>
+
+ <update id="delete" parameterType="com.zxk.study.module.dto.JmMenuDTO">
+       update jm_menu set delete_flag=1 
+                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
+                  where id=#{id} 
+ </update>
+
+
+</mapper>

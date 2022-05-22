@@ -5,12 +5,13 @@ import com.zxk.study.module.vo.input.MenuInput;
 import com.zxk.study.service.MenuService;
 import com.zxk.study.utils.BaseResult;
 import com.zxk.study.utils.BaseResultError;
+import com.zxk.study.utils.Constants;
 import com.zxk.study.utils.PassToken;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,8 +41,10 @@ public class MenuController {
 		        sysMenuDTO.setMenuId(id);
 		        return BaseResult.success(menuService.query(sysMenuDTO));
 		 }
+		 @SneakyThrows
 		 @PassToken
 		 @GetMapping("/listmenu")
+		 @ResponseBody
 		 public String getMenuList(HttpServletRequest request){
 			 List<SysMenuDTO> sysMenuDTOS = menuService.queryListAll();
 			 BaseResult baseResult = BaseResult.success(sysMenuDTOS);

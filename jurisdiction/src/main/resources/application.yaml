@@ -1,0 +1,28 @@
+server:
+  port: 8081
+  address: 192.168.1.45
+  #默认立即关闭、graceful优雅关闭（待正在执行的用户完成操作后关闭）
+  shutdown: graceful
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 200
+      min-spare: 10
+#  servlet:
+#    context-path:
+spring:
+  application:
+    name: jurisdiction
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/jdemo?useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
+  web:
+    resources:
+      static-locations: classpath:/static/
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zxk.study.module.dto
+#logging:
+#  config: classpath:logback-spring.xml

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="margin:0px auto; width:500px">
+<!--        name: <input name="name" th:value="${menu.name}"/> <br/>-->
+<!--        <input name="id" type="hidden" th:value="${menu.menu_id}"/>-->
+<!--        <button type="submit">提交</button>-->
+        <input id="name" type="text" name="name" placeholder="菜单名"><br>
+        <input id="url" type="text" name="url" placeholder="URL"><br>
+        <input id="parentId" type="number" name="parentId" placeholder="父菜单"><br>
+        <button type="submit" onclick="fa()">提交</button>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    function fa() {
+        var name =document.getElementById("name").value;
+        var url = document.getElementById("url").value;
+        var parentId = document.getElementById("parentId").value;
+        const dataTest = {
+            name: name.toString(),
+            icon:"icon",
+            url: url.toString(),
+            parentId:parseInt(parentId)
+            // name: "测试菜单1",
+            // icon:"icon",
+            // url: "测试URL1",
+            // parentId: 3
+        };
+
+        $.ajax({
+            url:"http://192.168.1.45:8081/api/v1/menu/add",
+            type:"post",
+            async:false,
+            crossDomain : true,
+            contentType:"application/json; charset=utf-8",
+            // data:dataTest,
+            data:JSON.stringify(dataTest),
+            dataType:"json",
+            success:function (data) {
+                alert(data);
+
+                if(data.code==0){
+                    window.location.href='http://192.168.1.45:8081/api/v1/menu/listmenu';
+                }else {
+                    alert(data.msg);
+                }
+            },
+            error: function (e) {
+                alert("错误！！");
+            }
+        });
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>

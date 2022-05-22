@@ -19,7 +19,7 @@ public class MyBatisGeneratorUtils {
     static String author = "zhouxx";
     static Map<String,String> dateMap=new HashMap<>();
 //    static String MySQLUrl = "jdbc:mysql://localhost:3306/chat?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowMultiQueries=true";
-    static String MySQLUrl = "jdbc:mysql://localhost:3306/jurisdictiondemo?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowMultiQueries=true";
+    static String MySQLUrl = "jdbc:mysql://localhost:3306/jdemo?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowMultiQueries=true";
 
     static String username = "root";
     static String password = "root";
@@ -51,7 +51,7 @@ public class MyBatisGeneratorUtils {
 
 
         // 数据库 -- 获取库中全部表，循环调用
-        String dataBase = "jurisdictiondemo";
+        String dataBase = "jdemo";
         // 表
         String tableName = "tmp_sys_user";
         String tableComment="系统用户表";
@@ -97,14 +97,14 @@ public class MyBatisGeneratorUtils {
         String MapperNameFile=MapperName+".java";
         String MapperNameXml=MapperName+".xml";
 
-        String voInputPath="./generator/"+voInputPackage.replaceAll("\\.","/");
-        String voOutputPath="./generator/"+voOutputPackage.replaceAll("\\.","/");
-        String boPath="./generator/"+boPackage.replaceAll("\\.","/");
-        String dtoPath="./generator/"+dtoPackage.replaceAll("\\.","/");
-        String controllerPath="./generator/"+controllerPackage.replaceAll("\\.","/");
-        String servicePath="./generator/"+servicePackage.replaceAll("\\.","/");
-        String serviceImplPath="./generator/"+serviceImplPackage.replaceAll("\\.","/");
-        String mapperPath="./generator/"+mapperPackage.replaceAll("\\.","/");
+        String voInputPath="./generator2/"+voInputPackage.replaceAll("\\.","/");
+        String voOutputPath="./generator2/"+voOutputPackage.replaceAll("\\.","/");
+        String boPath="./generator2/"+boPackage.replaceAll("\\.","/");
+        String dtoPath="./generator2/"+dtoPackage.replaceAll("\\.","/");
+        String controllerPath="./generator2/"+controllerPackage.replaceAll("\\.","/");
+        String servicePath="./generator2/"+servicePackage.replaceAll("\\.","/");
+        String serviceImplPath="./generator2/"+serviceImplPackage.replaceAll("\\.","/");
+        String mapperPath="./generator2/"+mapperPackage.replaceAll("\\.","/");
 
         System.out.printf("tableName={%s},BoName={%s} ,DtoName={%s},MapperName={%s}\n",tableName,BoName,DtoName,MapperName);
         System.out.printf("boPath={%s},dtoPath={%s} ,mapperPath={%s},MapperName={%s}\n",boPath,dtoPath,mapperPath,MapperName);
