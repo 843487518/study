@@ -5,6 +5,7 @@ import com.zxk.study.module.vo.input.UserInput;
 import com.zxk.study.service.UserService;
 import com.zxk.study.utils.BaseResult;
 import com.zxk.study.utils.BaseResultError;
+import com.zxk.study.utils.PassToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class UserController {
 
 		 //用户登录接口
 		@RequestMapping("/login")
+		@PassToken
 		public BaseResult login(Model model, @RequestParam String userName, @RequestParam String pwd){
 			JmUserDTO tbUserDTO=new JmUserDTO();
 			tbUserDTO.setUsername(userName);
@@ -37,7 +39,6 @@ public class UserController {
 			return userService.login(tbUserDTO);
 
 		}
-
 
 		 @GetMapping("/detail/{id}")
 		 public BaseResult getDetail(@PathVariable("id") long id){

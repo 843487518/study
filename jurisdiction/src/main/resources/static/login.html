@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
     <title>登录界面</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -144,7 +144,9 @@
         var userName = document.getElementById("text1").value;
         var pwd = document.getElementById("text2").value;
         //拼接url
-        var url = "http://192.168.1.45:8081/api/v1/user/login?"+"userName="+userName+"&pwd="+pwd;
+        alert(userName);
+        alert(pwd);
+        var url = "http://192.168.1.45:8088/api/v1/user/login?"+"userName="+userName+"&pwd="+pwd;
         $.ajax({
             url: url,
             type: "get",
@@ -154,10 +156,10 @@
             // data:JSON.stringify(),
             dataType: "json",
             success: function (data) {
-                alert(data);
                 if (data.code == 0) {
+                    sessionStorage.setItem("token",data.data.token);
                     //如果后端返回的状态码为0，则表示登录成功，跳转至首页
-                    window.open("http://192.168.1.45:8081/iframe.html");
+                    window.open("http://192.168.1.45:8088/iframe.html");
                 }else {
                     //否则提示登录失败原因
                     alert(data.msg);

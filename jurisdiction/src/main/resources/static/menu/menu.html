@@ -2,13 +2,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
 
 </head>
 <div>
-    <textarea>hello</textarea>
     <table border="1px" id="menu_table">
-
     </table>
 </div>
 <body>
@@ -16,17 +14,26 @@
 <script language="JavaScript">
 <!--页面加载的时候就去请求-->
     window.onload = function () {
+        var queryList = {
+            deleFlag: 0
+        };
+        var stoken = sessionStorage.getItem("token");
+
         $.ajax({
-            url: "http://192.168.1.45:8081/api/v1/menu/listmenu",
-            type: "get",
+            url: "http://192.168.1.45:8088/api/v1/menu/list",
+            type: "post",
+            headers: {
+                token:stoken
+            },
             async: false,
             crossDomain: true,
             contentType: "application/json; charset=utf-8",
-            // data:JSON.stringify(dataTest),
+            data: JSON.stringify(queryList),
             dataType: "json",
             success: function (data) {
                 alert(data);
                 if (data.code == 0) {
+                    //调用数据填充函数
                     showData(data.data);
                 }
             },
@@ -34,22 +41,53 @@
                 alert("错误！！");
             }
         });
+    }
         function showData(data) {
             var table = $("#menu_table");
-            alert(table.id);
-
             table.empty();
             //拼接表头
             table.append("<tr></tr><td>id</td><td>名称</td><td>url</td></tr>");
             for (var i = 0; i < data.length; i++) {
                 //拼接表格的行和列
-                var str = "<tr><td>" + data[i].menuId + "</td><td>" + data[i].name + "</td><td>" + data[i].url + "</td></tr>";
+                var str =
+                    "<tr>" +
+                    "<td>" + data[i].id + "</td>" +
+                    "<td>" + data[i].menuName + "</td>" +
+                    "<td>" + data[i].url + "</td>" +
+                    "<td>" + "<a href='modifyMenu.html?id="+data[i].id+"'>编辑</a>" + "</td>" +
+                    "<td>" + "<a href='#' onclick='deleteFunction(this)' id="+data[i].id+">删除</a>" + "</td>" +
+                    "</tr>";
                 table.append(str);
             }
         }
-    }
-
-
+            function deleteFunction(en) {
+                var menuId = en.id;
+                alert(menuId);
+                var url = "http://192.168.1.45:8088/api/v1/menu/delete/" + menuId;
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    async: false,
+                    crossDomain: true,
+                    contentType: "application/json; charset=utf-8",
+                    // data:JSON.stringify(dataTest),-->
+                    // data: {-->
+                    //     id:parseInt(menuId)-->
+                    // },-->
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.code == 0) {
+                            // window.location.href = 'http://192.168.1.45:8088/menu/menu.html';
+                            window.open("http://192.168.1.45:8088/menu/menu.html");
+                        } else {
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (e) {
+                        alert("错误！！");
+                    }
+                });
+            }
 </script>
 
 <!--<span th:if="${ session.get('listBaseResult') == null }" >-->

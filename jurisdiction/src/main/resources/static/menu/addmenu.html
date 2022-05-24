@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <script type="text/javascript" src="/static/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -32,7 +32,7 @@
         };
 
         $.ajax({
-            url:"http://192.168.1.45:8081/api/v1/menu/add",
+            url:"http://192.168.1.45:8088/api/v1/menu/add",
             type:"post",
             async:false,
             crossDomain : true,
@@ -44,7 +44,7 @@
                 alert(data);
 
                 if(data.code==0){
-                    window.location.href='http://192.168.1.45:8081/api/v1/menu/listmenu';
+                    window.location.href='http://192.168.1.45:8088/api/v1/menu/listmenu';
                 }else {
                     alert(data.msg);
                 }

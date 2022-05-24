@@ -9,7 +9,7 @@ public class JwtException extends RuntimeException {
     public JwtException(BaseResultError error){
        this(error.getCode(),error.getMsg());
     }
-    public JwtException(int code, String msg){
+    public JwtException(int code,String msg){
         super(msg);
         this.code=code;
         this.exceptionMessage=msg;

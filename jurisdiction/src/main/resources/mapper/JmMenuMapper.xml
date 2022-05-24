@@ -85,8 +85,8 @@
                           <if test="updateTime != null">
                               and update_time = #{updateTime}
                           </if>
-                          <if test="deleteFlag != null">
-                              and delete_flag = #{deleteFlag}
+                          <if test="1==1">
+                              and delete_flag = 0
                           </if>
                         </where>
  </select>
@@ -97,15 +97,16 @@
  </insert>
 
  <update id="update" parameterType="com.zxk.study.module.dto.JmMenuDTO">
-       update jm_menu set 
+       update jm_menu
+       <set>
               <if test="parentId != null">parent_id=#{parentId},</if>
               <if test="menuName != null">menu_name=#{menuName},</if>
               <if test="url != null">url=#{url},</if>
               <if test="icon != null">icon=#{icon},</if>
               <if test="createUserId != null">create_user_id=#{createUserId},</if>
               <if test="deleteFlag != null">delete_flag=#{deleteFlag}</if>
-                              <!--update_time: 乐观锁，以第一个修改为准;且只能用主键id更新！-->
-                  where id=#{id} and update_time = #{updateTime}
+       </set>
+       where id=#{id}
  </update>
 
  <update id="delete" parameterType="com.zxk.study.module.dto.JmMenuDTO">
