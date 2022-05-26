@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ScamQR</title>
+    <script src="js/jsQR.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Ropa Sans', sans-serif;
+            color: #333;
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #githubLink {
+            position: absolute;
+            right: 0;
+            top: 12px;
+            color: #2D99FF;
+        }
+
+        h1 {
+            margin: 10px 0;
+            font-size: 40px;
+        }
+
+        #loadingMessage {
+            text-align: center;
+            padding: 40px;
+            background-color: #eee;
+        }
+
+        #canvas {
+            width: 100%;
+        }
+
+        #output {
+            margin-top: 20px;
+            background: #eee;
+            padding: 10px;
+            padding-bottom: 0;
+        }
+
+        #output div {
+            padding-bottom: 10px;
+            word-wrap: break-word;
+        }
+
+        #noQRFound {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+<div>
+</div>
+
+<h5>jsQR Scam</h5>
+<div id="loadingMessage">Unable to access video stream (please make sure you have a webcam enabled)</div>
+<canvas id="canvas" hidden></canvas>
+
+<div id="output" hidden>
+    <div id="outputMessage">No QR code detected</div>
+    <div hidden><b>Data:</b> <span id="outputData"></span></div>
+</div>
+
+<script type="text/javascript">
+    var video = document.createElement("video");
+    var canvasElement = document.getElementById("canvas");
+    var canvas = canvasElement.getContext("2d");
+    var loadingMessage = document.getElementById("loadingMessage");
+    var outputContainer = document.getElementById("output");
+    var outputMessage = document.getElementById("outputMessage");
+    var outputData = document.getElementById("outputData");
+    var rafId;
+
+    function drawLine(begin, end, color) {
+        canvas.beginPath();
+        canvas.moveTo(begin.x, begin.y);
+        canvas.lineTo(end.x, end.y);
+        canvas.lineWidth = 4;
+        canvas.strokeStyle = color;
+        canvas.stroke();
+    }
+
+    //启动摄像头
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function (stream) {
+        video.srcObject = stream;
+        video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+        video.play();
+
+        //在这里使用requestAnimationFrame，重复调用tick()函数
+        rafId = requestAnimationFrame(tick);
+        //如何停止？
+        //requestAnimationFrame默认返回一个id，
+        //cancelAnimationFrame只需要传入这个id就可以停止了。
+    });
+
+    //读取二维码信息
+    function tick() {
+        loadingMessage.innerText = "Loading video..."
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+            loadingMessage.hidden = true;
+            canvasElement.hidden = false;
+            outputContainer.hidden = false;
+
+            canvasElement.height = video.videoHeight;
+            canvasElement.width = video.videoWidth;
+            canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+            var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+            var code = jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: "dontInvert",
+            });
+            if (code) {
+                drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
+                drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
+                drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
+                drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
+                outputMessage.hidden = true;
+                outputData.parentElement.hidden = false;
+                outputData.innerText = code.data;
+                //使用ajax请求我后端的打卡接口
+                var tourl = code.data+1;
+                $.ajax({
+                    url: tourl,
+                    type: "get",
+                    // headers: {
+                    //     token:stoken
+                    // },
+                    async: false,
+                    crossDomain: true,
+                    contentType: "application/json; charset=utf-8",
+                    // data: JSON.stringify(queryList),
+                    dataType: "json",
+                    success: function (data) {
+                        alert(data);
+                        if (data.code == 0) {
+
+                        }
+                    },
+                    error: function (e) {
+                        alert("错误！！");
+                    }
+                });
+                //获取到二维码信息之后，在此进行页面的跳转。window.location.href = "result.html?"+code.data;
+                window.open("result.html");
+                if (code.data){
+                    //拿到了二维码中的值，就制止上面的requestAnimationFrame(tick);
+                    cancelAnimationFrame(rafId);
+                    //我在手机端使用手机扫描二维码的时候，发现了多次请求现象，因此我在最后加上了return，只要读取到数据就只进行一次跳转
+                    return;
+                }
+            } else {
+                outputMessage.hidden = false;
+                outputData.parentElement.hidden = true;
+            }
+        }
+        rafId = requestAnimationFrame(tick);
+    }
+</script>
+
+</body>
+
+</html>

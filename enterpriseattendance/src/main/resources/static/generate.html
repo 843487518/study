@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src = "js/qrcode.min.js"></script>
+    <script src = "js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div id="qrcode" style="width: 100px;height: 100px;margin-top: 15px"></div>
+<script>
+    //定时生成二维码
+    //定义定时任务类型参数
+    var config={
+        time:"08:30:00",
+        interval:1,
+        runNow:true
+    }
+    //尝试执行定时函数
+    timeTask(config);
+
+    //定义定时执行函数
+    function timeTask(config){
+        if(config.runNow){
+            //如果配置了立刻运行则立刻运行任务函数
+            makeCode();
+        }
+        //获取下次要执行的时间，如果执行时间已经过了今天，就让把执行时间设到明天的按时执行的时间
+        var nowTime=new Date().getTime();
+        var timePoint=config.time.split(":").map(i=>parseInt(i));
+        var recent =new Date().setHours(...timePoint);//获取执行时间的时间戳
+        if(recent <= nowTime){
+            recent+=24*60*60*1000;
+        }
+        //未来程序执行的时间减去现在的时间，就是程序要多少秒之后执行
+        var doRunTime=recent-nowTime;
+        setTimeout(function(){
+            makeCode();
+            //没隔多少天在执执行
+            var intTime=config.interval*24*60*60*1000;
+            setInterval(function(){
+                makeCode();
+            },intTime);
+        },doRunTime);
+    }
+    var url = "https://192.168.1.45:8089/api/v1/attendance/";
+    var qrcode = new QRCode("qrcode", {
+        text: url,
+        width: 128,
+        height: 128,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+    //定义生成二维码的函数
+    function makeCode () {
+        //内容为空不生成
+        if (!(url)) {
+            return;
+        }
+        qrcode.makeCode(url);
+    }
+
+</script>
+<!--<script>-->
+<!--    var elText = $("#text").val();-->
+<!--    // var elText = "www.baidu.com";-->
+<!--    var qrcode = new QRCode("qrcode", {-->
+<!--        text: elText,-->
+<!--        width: 128,-->
+<!--        height: 128,-->
+<!--        colorDark : "#000000",-->
+<!--        colorLight : "#ffffff",-->
+<!--        correctLevel : QRCode.CorrectLevel.H-->
+<!--    });-->
+<!--    function makeCode () {-->
+<!--        var elText = document.getElementById("text").value;-->
+<!--        //内容为空不生成-->
+<!--        if (!elText) {-->
+<!--            // elText.focus();-->
+<!--            return;-->
+<!--        }-->
+<!--        qrcode.makeCode(elText);-->
+<!--    }-->
+<!--    $("#text")-->
+<!--        .on("blur", function () {makeCode();})-->
+<!--        .on("keydown", function (e) {-->
+<!--            if (e.keyCode == 13) {-->
+<!--                makeCode();-->
+<!--            }-->
+<!--        });-->
+<!--</script>-->
+</body>
+</html>
