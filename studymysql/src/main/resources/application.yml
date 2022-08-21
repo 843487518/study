@@ -1,0 +1,26 @@
+server:
+#  port: 8080
+#  address: 192.168.184.130
+  #默认立即关闭、graceful优雅关闭（待正在执行的用户完成操作后关闭）
+  shutdown: graceful
+spring:
+  datasource:
+    master:
+#      jdbc-url: jdbc:mysql://192.168.184.125:3306/test_mysql_1
+      jdbc-url: jdbc:mysql://localhost:3306/test_mysql_1
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+    slave1:
+      jdbc-url: jdbc:mysql://localhost:3306/test_mysql_2
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+    slave2:
+      jdbc-url: jdbc:mysql://localhost:3306/test_mysql_3
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zxk.study.entity

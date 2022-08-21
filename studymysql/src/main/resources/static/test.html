@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="margin:0px auto; width:500px">
+  <input id="id" type="number" name="id" placeholder="id"><br>
+  <button type="submit" onclick="select()">查询</button>
+</div>
+<div style="margin:0px auto; width:500px">
+  <input id="name" type="text" name="name" placeholder="name"><br>
+  <button type="submit" onclick="insert()">插入</button>
+</div>
+<script language="JavaScript">
+  function select() {
+    var id =document.getElementById("id").value;
+    $.ajax({
+      // url:"http://192.168.184.130:8080/api/v1/member/one/"+id,
+        url:"http://localhost:8080/api/v1/member/one/"+id,
+      type:"get",
+      async:false,
+      crossDomain : true,
+      contentType:"application/json; charset=utf-8",
+      dataType:"json",
+      success:function (data) {
+        alert(data);
+      },
+      error: function (e) {
+        alert("错误！！");
+      }
+    });
+  };
+
+  function insert(){
+    var name =document.getElementById("name").value;
+    $.ajax({
+      // url:"http://192.168.184.130:8080/api/v1/member/inser/"+name,
+        url:"http://localhost:8080/api/v1/member/inser/"+name,
+        type:"get",
+      async:false,
+      crossDomain : true,
+      contentType:"application/json; charset=utf-8",
+      dataType:"json",
+      success:function (data) {
+        alert(data);
+      },
+      error: function (e) {
+        alert("错误！！");
+      }
+    });
+  }
+</script>
+</body>
+</html>
